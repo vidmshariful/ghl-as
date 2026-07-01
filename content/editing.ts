@@ -8,6 +8,9 @@ import {
   RefreshCw,
   Zap,
   CalendarX,
+  Hourglass,
+  MessageSquare,
+  Shuffle,
 } from "lucide-react";
 import { ctas } from "./site";
 
@@ -42,7 +45,7 @@ export const editingHero = {
 
 export const editingWhoFor = {
   eyebrow: "Who it is for",
-  heading: "Built for HighLevel creators",
+  heading: "Built for HighLevel **creators**",
   description: "If you make content about HighLevel, this is your editing team.",
   items: [
     {
@@ -70,19 +73,22 @@ export const editingWhoFor = {
 
 export const editingProblem = {
   eyebrow: "The bottleneck",
-  heading: "Editing is eating your time",
+  heading: "Editing is eating your **time**",
   intro:
     "You record fast, then editing piles up. Worse, generic editors do not understand HighLevel.",
   cards: [
     {
+      icon: Hourglass,
       title: "You are stuck editing",
       body: "Hours in the timeline are hours you are not creating or selling.",
     },
     {
+      icon: MessageSquare,
       title: "Endless explaining",
       body: "Generic editors do not know the platform, so you explain everything twice.",
     },
     {
+      icon: Shuffle,
       title: "Inconsistent output",
       body: "Quality swings between editors, so your channel never looks dialed in.",
     },
@@ -91,7 +97,7 @@ export const editingProblem = {
 
 export const editingProcess = {
   eyebrow: "How it works",
-  heading: "Editing on tap",
+  heading: "Editing on **tap**",
   description: "Send footage, get edits back. Simple.",
   steps: [
     {
@@ -111,13 +117,13 @@ export const editingProcess = {
 
 export const editingPlans = {
   eyebrow: "Plans",
-  heading: "Pick your pace",
+  heading: "Pick your **pace**",
   description: "Month to month. Pause or cancel anytime.",
 };
 
 export const editingIncludes = {
   eyebrow: "Every plan includes",
-  heading: "What every plan includes",
+  heading: "What every plan **includes**",
   items: [
     {
       icon: MonitorPlay,
@@ -151,7 +157,7 @@ export const editingStats: Stat[] = [
 // TODO: real data — real sample edits (posters / embeds).
 export const editingSamples = {
   eyebrow: "Sample edits",
-  heading: "See the edits",
+  heading: "See the **edits**",
   description: "Real HighLevel content, long-form and short.",
   items: [
     { tag: "Long-form", title: "Sample edit" },
@@ -162,7 +168,7 @@ export const editingSamples = {
 
 export const editingFaqs = {
   eyebrow: "Questions",
-  heading: "Your questions, answered",
+  heading: "Your questions, **answered**",
   items: [
     {
       question: "What do I send you?",
@@ -198,5 +204,20 @@ export const editingFinalCta = {
   ctas: [
     { label: "See plans", href: "#plans", variant: "blue" as const },
     { ...ctas.book, variant: "ghost" as const },
+  ],
+  checks: ["No contracts", "Unlimited revisions", "Fast turnaround"],
+  steps: [
+    {
+      title: "Send your footage",
+      body: "Drop your files and notes whenever you like.",
+    },
+    {
+      title: "We edit on tap",
+      body: "Polished edits with fast turnaround.",
+    },
+    {
+      title: "Publish on schedule",
+      body: "Ready-to-post video, every time.",
+    },
   ],
 };

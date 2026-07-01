@@ -7,7 +7,7 @@ type Variant = "blue" | "ghost" | "gold";
 type Size = "md" | "sm";
 
 const base =
-  "group relative isolate inline-flex items-center justify-center overflow-hidden whitespace-nowrap rounded-md font-display font-semibold cursor-pointer transition-all duration-200 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue focus-visible:ring-offset-2 focus-visible:ring-offset-bg disabled:opacity-50 disabled:pointer-events-none";
+  "group relative isolate inline-flex items-center justify-center overflow-hidden whitespace-nowrap rounded-lg font-display font-semibold cursor-pointer transition-all duration-200 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue focus-visible:ring-offset-2 focus-visible:ring-offset-bg disabled:opacity-50 disabled:pointer-events-none";
 
 const sizes: Record<Size, { pad: string; gap: string }> = {
   md: { pad: "text-[15px] px-7 py-[17px]", gap: "gap-[9px]" },

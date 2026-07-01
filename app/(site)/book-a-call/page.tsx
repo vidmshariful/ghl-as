@@ -2,18 +2,18 @@ import type { Metadata } from "next";
 import { Check } from "lucide-react";
 
 import { SectionWrapper } from "@/components/ui/section-wrapper";
-import { Stagger } from "@/components/ui/stagger";
 import { Reveal } from "@/components/ui/reveal";
 import { PageHero } from "@/components/sections/page-hero";
-import { FeatureCard } from "@/components/cards/feature-card";
-import { Testimonial } from "@/components/cards/testimonial";
+import { CtaBand } from "@/components/sections/cta-band";
+import { FeatureGrid } from "@/components/sections/feature-grid";
+import { TestimonialsSection } from "@/components/sections/testimonials-section";
 
 import {
   bookHero,
   bookWhatYouGet,
   bookWhoFor,
   bookBooking,
-  bookTestimonial,
+  bookFinalCta,
 } from "@/content/book";
 
 export const metadata: Metadata = {
@@ -35,31 +35,22 @@ export default function BookACallPage() {
       <SectionWrapper
         eyebrow={bookWhatYouGet.eyebrow}
         heading={bookWhatYouGet.heading}
+        className="theme-light bg-bg"
       >
-        <Stagger
-          className="grid grid-cols-1 gap-4 sm:grid-cols-3"
-          itemClassName="h-full"
-        >
-          {bookWhatYouGet.cards.map((c) => (
-            <FeatureCard key={c.title} {...c} />
-          ))}
-        </Stagger>
+        <FeatureGrid items={bookWhatYouGet.cards} columns={3} />
       </SectionWrapper>
 
       {/* Who it is for */}
       <SectionWrapper eyebrow={bookWhoFor.eyebrow} heading={bookWhoFor.heading}>
-        <Stagger
-          className="grid grid-cols-1 gap-4 sm:grid-cols-3"
-          itemClassName="h-full"
-        >
-          {bookWhoFor.cards.map((c) => (
-            <FeatureCard key={c.title} {...c} />
-          ))}
-        </Stagger>
+        <FeatureGrid items={bookWhoFor.cards} columns={3} />
       </SectionWrapper>
 
       {/* Booking block */}
-      <SectionWrapper heading={bookBooking.heading} description={bookBooking.description}>
+      <SectionWrapper
+        heading={bookBooking.heading}
+        description={bookBooking.description}
+        className="theme-light bg-bg"
+      >
         <div className="grid gap-8 lg:grid-cols-[1fr_1.4fr] lg:items-start">
           <Reveal>
             <ul className="grid gap-3">
@@ -85,14 +76,11 @@ export default function BookACallPage() {
         </div>
       </SectionWrapper>
 
-      {/* Light proof */}
-      <SectionWrapper className="!pt-0">
-        <Reveal>
-          <div className="mx-auto max-w-[640px]">
-            <Testimonial {...bookTestimonial} />
-          </div>
-        </Reveal>
-      </SectionWrapper>
+      {/* Social proof (global) */}
+      <TestimonialsSection />
+
+      {/* Final CTA */}
+      <CtaBand {...bookFinalCta} />
     </>
   );
 }

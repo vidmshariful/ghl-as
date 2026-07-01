@@ -12,7 +12,7 @@ export interface Faq {
   answer: string;
 }
 
-/** Click to expand, rotating gold chevron, animated height. */
+/** Click to expand, rotating blue chevron, animated height. */
 export function FaqItem({
   question,
   answer,
@@ -26,7 +26,7 @@ export function FaqItem({
   );
 
   return (
-    <div className="card-surface rounded-xl border border-line px-4 py-3.5">
+    <div className="card-surface rounded-2xl border border-line px-5 py-4">
       <button
         type="button"
         aria-expanded={open}
@@ -36,7 +36,7 @@ export function FaqItem({
         {question}
         <ChevronDown
           className={cn(
-            "h-4 w-4 shrink-0 text-gold transition-transform duration-200",
+            "h-4 w-4 shrink-0 text-blue transition-transform duration-200",
             open && "rotate-180",
           )}
         />

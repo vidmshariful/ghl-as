@@ -1,16 +1,63 @@
 @import "tailwindcss";
 
-/* Class-based dark mode driven by next-themes (attribute="class") */
-@custom-variant dark (&:where(.dark, .dark *));
+/* ===========================================================
+   DESIGN TOKENS — single "hybrid" theme
+   One deep-navy theme, every color derived from the brand logo
+   (blue / green / gold / coral on a navy base). No light mode,
+   no toggle.
+   =========================================================== */
+:root {
+  --bg: #0b1020;
+  --surface-1: #121a2e;
+  --surface-2: #16203a;
+  --surface-3: #1e2a45;
+  --border: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.16);
+  --text-primary: #eaf0fa;
+  --text-secondary: #93a0b8;
+  --text-tertiary: #62708a;
+
+  /* Logo blue — primary accent (actions, links, highlights) */
+  --blue: #2d7ff0;
+  --blue-hover: #4a90f5;
+  --blue-soft: rgba(45, 127, 240, 0.14);
+  --blue-glow: rgba(45, 127, 240, 0.42);
+
+  /* Logo green */
+  --green: #43b95b;
+  --green-soft: rgba(67, 185, 91, 0.16);
+
+  /* Logo gold */
+  --gold: #f2b816;
+  --gold-soft: rgba(242, 184, 22, 0.16);
+  --gold-btn: #f4be1c;
+
+  /* Logo coral (the arrow swoosh) */
+  --coral: #ef4e3c;
+  --coral-soft: rgba(239, 78, 60, 0.16);
+
+  /* Deep ink for text on bright (gold/coral) fills */
+  --ink: #0b1020;
+
+  --grad-btn: linear-gradient(135deg, #4a90f5, #1f63d6);
+  --grad-text: linear-gradient(120deg, #7db4ff, #2e7df0);
+  --grad-surface: linear-gradient(180deg, #000000 0%, #0e1424 100%);
+  /* Cyclic tri-color brand gradient from the logo icon (blue / green / gold),
+     ending back on blue so an animated shift loops seamlessly. */
+  --grad-logo: linear-gradient(90deg, #2d7ff0 0%, #43b95b 33%, #f2b816 66%, #2d7ff0 100%);
+  --grid-line: rgba(255, 255, 255, 0.05);
+  /* Resting card elevation (theme-aware). */
+  --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
 
 /* ===========================================================
-   DESIGN TOKENS
-   Light is the base in :root, dark overrides under .dark.
-   The site boots dark because the provider sets defaultTheme="dark".
+   LIGHT SECTIONS (hybrid)
+   The site is dark by default; any section (or subtree) tagged
+   .theme-light flips to a clean light surface. Because the theme
+   tokens are inlined, every token-based utility inside re-resolves
+   automatically. Blue stays the primary accent on both.
    =========================================================== */
-
-/* LIGHT (base) */
-:root {
+.theme-light {
   --bg: #f5f8fd;
   --surface-1: #ffffff;
   --surface-2: #ffffff;
@@ -20,45 +67,15 @@
   --text-primary: #15203a;
   --text-secondary: #51607a;
   --text-tertiary: #8593ab;
-  --blue: #2e7df0;
-  --blue-hover: #1f63d6;
-  --blue-soft: rgba(46, 125, 240, 0.1);
-  --blue-glow: rgba(46, 125, 240, 0.22);
-  --gold: #e8a50c;
-  --gold-soft: rgba(232, 165, 12, 0.14);
-  /* Lighter, warmer fill for the gold button so dark ink text reads well on light. */
-  --gold-btn: #f6c02e;
-  --ink: #1e2b4a;
-  --grad-btn: linear-gradient(135deg, #4a90f5, #1f63d6);
-  --grad-text: linear-gradient(120deg, #2e7df0, #1b5fd0);
-  /* Subtle premium card gradient. */
+  --blue-soft: rgba(45, 127, 240, 0.1);
+  --blue-glow: rgba(45, 127, 240, 0.16);
+  --green-soft: rgba(67, 185, 91, 0.14);
+  --gold-soft: rgba(242, 184, 22, 0.18);
+  --coral-soft: rgba(239, 78, 60, 0.12);
   --grad-surface: linear-gradient(180deg, #ffffff 0%, #f3f7fd 100%);
   --grid-line: rgba(20, 30, 55, 0.05);
-}
-
-/* DARK (override) */
-.dark {
-  --bg: #0a0e16;
-  --surface-1: #10141f;
-  --surface-2: #161c2a;
-  --surface-3: #1e2638;
-  --border: rgba(255, 255, 255, 0.08);
-  --border-strong: rgba(255, 255, 255, 0.15);
-  --text-primary: #eaf0fa;
-  --text-secondary: #93a0b8;
-  --text-tertiary: #5e6b82;
-  --blue: #2e7df0;
-  --blue-hover: #4a90f5;
-  --blue-soft: rgba(46, 125, 240, 0.14);
-  --blue-glow: rgba(46, 125, 240, 0.42);
-  --gold: #f5b81f;
-  --gold-soft: rgba(245, 184, 31, 0.16);
-  --gold-btn: #f7c12b;
-  --ink: #1e2b4a;
-  --grad-btn: linear-gradient(135deg, #4a90f5, #1f63d6);
-  --grad-text: linear-gradient(120deg, #7db4ff, #2e7df0);
-  --grad-surface: linear-gradient(180deg, #1b2234 0%, #141a26 100%);
-  --grid-line: rgba(255, 255, 255, 0.05);
+  /* Soft elevation for cards on light surfaces. */
+  --card-shadow: 0 1px 2px rgba(20, 30, 55, 0.06), 0 14px 32px rgba(20, 30, 55, 0.08);
 }
 
 /* ===========================================================
@@ -82,9 +99,13 @@
   --color-blue: var(--blue);
   --color-blue-hover: var(--blue-hover);
   --color-blue-soft: var(--blue-soft);
+  --color-green: var(--green);
+  --color-green-soft: var(--green-soft);
   --color-gold: var(--gold);
   --color-gold-soft: var(--gold-soft);
   --color-gold-btn: var(--gold-btn);
+  --color-coral: var(--coral);
+  --color-coral-soft: var(--coral-soft);
   --color-ink: var(--ink);
 
   --font-display: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
@@ -99,10 +120,9 @@
    tracking, and weight so the scale cascades from one place.
    =========================================================== */
 @theme {
-  /* Hero headline only: smaller than text-display so a centered headline
-     wraps to 2-3 balanced lines and never overflows. */
-  --text-hero: clamp(44px, 8vw, 92px);
-  --text-hero--line-height: 1.3;
+  /* Hero headline only: balance-wrapped to two lines, never overflows. */
+  --text-hero: clamp(44px, 6vw, 76px);
+  --text-hero--line-height: 1.05;
   --text-hero--letter-spacing: -2px;
   --text-hero--font-weight: 800;
 
@@ -111,14 +131,15 @@
   --text-display--letter-spacing: -3px;
   --text-display--font-weight: 800;
 
-  --text-h2: clamp(34px, 5.5vw, 68px);
-  --text-h2--line-height: 1.3;
+  /* The ONE section-heading scale, used by every section on every page. */
+  --text-h2: clamp(36px, 5vw, 66px);
+  --text-h2--line-height: 1.08;
   --text-h2--letter-spacing: -1.5px;
   --text-h2--font-weight: 800;
 
-  --text-stat: clamp(56px, 11vw, 132px);
-  --text-stat--line-height: 0.9;
-  --text-stat--letter-spacing: -2px;
+  --text-stat: clamp(40px, 6vw, 62px);
+  --text-stat--line-height: 1;
+  --text-stat--letter-spacing: -1.5px;
   --text-stat--font-weight: 800;
 
   --animate-marquee: marquee 32s linear infinite;
@@ -133,7 +154,7 @@
   }
 }
 
-/* Glow lights running down the hero grid lines (falling-star feel). */
+/* Glow lights running along the hero grid lines (falling-star feel). */
 .grid-beam {
   position: absolute;
   top: 0;
@@ -157,6 +178,64 @@
   }
   100% {
     transform: translateY(110vh);
+    opacity: 0;
+  }
+}
+
+/* Horizontal glow light running across the grid lines. */
+.grid-beam-h {
+  position: absolute;
+  left: 0;
+  height: 1px;
+  width: 200px;
+  background: linear-gradient(to right, transparent, var(--blue), transparent);
+  animation: grid-fall-x linear infinite;
+  will-change: transform, opacity;
+}
+
+@keyframes grid-fall-x {
+  0% {
+    transform: translateX(-220px);
+    opacity: 0;
+  }
+  12% {
+    opacity: 1;
+  }
+  88% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(110vw);
+    opacity: 0;
+  }
+}
+
+/* Star spark where beams cross a grid intersection. */
+.grid-spark {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 9999px;
+  background: radial-gradient(circle, #ffffff 0%, var(--blue) 45%, transparent 72%);
+  box-shadow: 0 0 10px 2px var(--blue);
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0;
+  animation: grid-spark ease-out infinite;
+  will-change: transform, opacity;
+}
+
+@keyframes grid-spark {
+  0%,
+  72% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+  }
+  80% {
+    transform: translate(-50%, -50%) scale(1.6);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(0);
     opacity: 0;
   }
 }
@@ -192,6 +271,44 @@ body * {
 .card-surface {
   background-color: var(--surface-2);
   background-image: var(--grad-surface);
+  box-shadow: var(--card-shadow);
+}
+
+/* Footer overlap: only when the page ends with a CTA band (.cta-overlap) does
+   the footer add top clearance so the floating panel overlaps it with a clean
+   ~80px gap to the footer content. Other pages keep a normal footer top. */
+main:has(> .cta-overlap:last-child) + footer {
+  padding-top: 176px;
+}
+@media (min-width: 768px) {
+  main:has(> .cta-overlap:last-child) + footer {
+    padding-top: 240px;
+  }
+}
+
+/* Brand wordmark: filled with the cyclic tri-color logo gradient, which shifts
+   continuously on a loop. Nested word spans stay transparent so the gradient is
+   one unbroken sweep across the whole lockup. */
+.wordmark-loop {
+  color: transparent;
+  background-image: var(--grad-logo);
+  -webkit-background-clip: text;
+  background-clip: text;
+  background-size: 200% auto;
+  background-position: 0% center;
+  animation: wordmark-shift 6s linear infinite;
+}
+
+@keyframes wordmark-shift {
+  to {
+    background-position: -200% center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wordmark-loop {
+    animation: none;
+  }
 }
 
 /* ===========================================================
@@ -245,6 +362,41 @@ body * {
 
 @media (prefers-reduced-motion: reduce) {
   .tier-glow::before {
+    animation: none;
+  }
+}
+
+/* Same animated border, but only visible on hover (sits above content). */
+.tier-glow-hover::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: conic-gradient(
+    from var(--tier-angle),
+    var(--blue),
+    var(--gold),
+    var(--blue)
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  animation: tier-rotate 6s linear infinite;
+}
+
+.tier-glow-hover:hover::before {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tier-glow-hover::before {
     animation: none;
   }
 }

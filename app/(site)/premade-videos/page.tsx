@@ -1,14 +1,13 @@
 import type { Metadata } from "next";
 
 import { SectionWrapper } from "@/components/ui/section-wrapper";
-import { Stagger } from "@/components/ui/stagger";
 import { PageHero } from "@/components/sections/page-hero";
 import { CtaBand } from "@/components/sections/cta-band";
 import { ProcessSteps } from "@/components/sections/process-steps";
 import { LibraryGrid } from "@/components/sections/library-grid";
-import { FeatureCard } from "@/components/cards/feature-card";
-import { Testimonial } from "@/components/cards/testimonial";
-import { FaqItem } from "@/components/cards/faq-item";
+import { FeatureGrid } from "@/components/sections/feature-grid";
+import { TestimonialsSection } from "@/components/sections/testimonials-section";
+import { FaqSection } from "@/components/sections/faq-section";
 
 import { videos } from "@/content/videos";
 import {
@@ -17,7 +16,6 @@ import {
   premadeLibrary,
   premadeProcess,
   premadeVsCustom,
-  premadeTestimonials,
   premadeFaqs,
   premadeFinalCta,
 } from "@/content/premade";
@@ -44,15 +42,9 @@ export default function PremadeVideosPage() {
         eyebrow={premadeIncludes.eyebrow}
         heading={premadeIncludes.heading}
         description={premadeIncludes.description}
+        className="theme-light bg-bg"
       >
-        <Stagger
-          className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4"
-          itemClassName="h-full"
-        >
-          {premadeIncludes.items.map((f) => (
-            <FeatureCard key={f.title} {...f} />
-          ))}
-        </Stagger>
+        <FeatureGrid items={premadeIncludes.items} columns={3} />
       </SectionWrapper>
 
       {/* Library */}
@@ -70,6 +62,7 @@ export default function PremadeVideosPage() {
         eyebrow={premadeProcess.eyebrow}
         heading={premadeProcess.heading}
         description={premadeProcess.description}
+        className="theme-light bg-bg"
       >
         <ProcessSteps steps={premadeProcess.steps} columns={3} />
       </SectionWrapper>
@@ -79,40 +72,21 @@ export default function PremadeVideosPage() {
         eyebrow={premadeVsCustom.eyebrow}
         heading={premadeVsCustom.heading}
         description={premadeVsCustom.description}
+        cta={{ label: "Book a call", href: "/book-a-call" }}
       >
-        <Stagger
-          className="grid grid-cols-1 gap-4 sm:grid-cols-3"
-          itemClassName="h-full"
-        >
-          {premadeVsCustom.cards.map((c) => (
-            <FeatureCard key={c.title} {...c} />
-          ))}
-        </Stagger>
+        <FeatureGrid items={premadeVsCustom.cards} columns={3} />
       </SectionWrapper>
 
-      {/* Social proof */}
-      <SectionWrapper
-        eyebrow={premadeTestimonials.eyebrow}
-        heading={premadeTestimonials.heading}
-      >
-        <Stagger
-          className="grid grid-cols-1 gap-4 sm:grid-cols-2"
-          itemClassName="h-full"
-        >
-          {premadeTestimonials.items.map((t, i) => (
-            <Testimonial key={i} {...t} />
-          ))}
-        </Stagger>
-      </SectionWrapper>
+      {/* Social proof (global) */}
+      <TestimonialsSection />
 
       {/* FAQ */}
-      <SectionWrapper eyebrow={premadeFaqs.eyebrow} heading={premadeFaqs.heading}>
-        <Stagger className="mx-auto flex max-w-[760px] flex-col gap-2.5">
-          {premadeFaqs.items.map((f) => (
-            <FaqItem key={f.question} {...f} />
-          ))}
-        </Stagger>
-      </SectionWrapper>
+      <FaqSection
+        eyebrow={premadeFaqs.eyebrow}
+        heading={premadeFaqs.heading}
+        items={premadeFaqs.items}
+        className="theme-light bg-bg"
+      />
 
       {/* Final CTA */}
       <CtaBand {...premadeFinalCta} />

@@ -15,12 +15,15 @@ export default function PrivacyPage() {
         eyebrow="Legal"
         headline={{ lead: "Privacy Policy" }}
       />
-      <div className="mx-auto w-full max-w-[760px] px-6 pb-24 text-[15px] leading-relaxed text-secondary md:px-8">
-        <p>
-          This is placeholder privacy policy copy. The final policy will explain
-          what we collect, how we use it, and your choices, in plain language.
-        </p>
-      </div>
+      <section className="theme-light bg-bg">
+        <div className="mx-auto w-full max-w-[760px] px-6 py-20 text-[15px] leading-relaxed text-secondary md:px-8 md:py-28">
+          <p>
+            This is placeholder privacy policy copy. The final policy will
+            explain what we collect, how we use it, and your choices, in plain
+            language.
+          </p>
+        </div>
+      </section>
     </>
   );
 }

@@ -15,13 +15,15 @@ export default function TermsPage() {
         eyebrow="Legal"
         headline={{ lead: "Terms of Service" }}
       />
-      <div className="mx-auto w-full max-w-[760px] px-6 pb-24 text-[15px] leading-relaxed text-secondary md:px-8">
-        <p>
-          This is placeholder terms of service copy. The final terms will cover
-          use of the site, purchases, licensing, and commercial rights, in plain
-          language.
-        </p>
-      </div>
+      <section className="theme-light bg-bg">
+        <div className="mx-auto w-full max-w-[760px] px-6 py-20 text-[15px] leading-relaxed text-secondary md:px-8 md:py-28">
+          <p>
+            This is placeholder terms of service copy. The final terms will cover
+            use of the site, purchases, licensing, and commercial rights, in
+            plain language.
+          </p>
+        </div>
+      </section>
     </>
   );
 }

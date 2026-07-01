@@ -1,54 +1,18 @@
-import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
 import { Eyebrow } from "@/components/ui/eyebrow";
-import { Button } from "@/components/ui/button";
+import { CtaGroup, type CtaItem } from "@/components/ui/cta-group";
 import { Reveal } from "@/components/ui/reveal";
 import { RevealText } from "@/components/ui/reveal-text";
 import { HeroBackdrop } from "@/components/sections/hero-backdrop";
 import { cn } from "@/lib/utils";
 
-interface Cta {
-  label: string;
-  href: string;
-  variant?: "blue" | "ghost" | "gold" | "text";
-}
-
 interface PageHeroProps {
   eyebrow?: string;
   headline: { lead: string; highlight?: string; trail?: string };
   subhead?: string;
-  ctas?: Cta[];
+  ctas?: CtaItem[];
   micro?: string;
   size?: "standard" | "compact";
   glow?: boolean;
-}
-
-function PageHeroCtas({ ctas }: { ctas: Cta[] }) {
-  return (
-    <div className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-3">
-      {ctas.map((cta) =>
-        cta.variant === "text" ? (
-          <Link
-            key={cta.label}
-            href={cta.href}
-            className="group inline-flex items-center gap-1.5 text-[15px] font-semibold text-primary transition-colors hover:text-blue"
-          >
-            {cta.label}
-            <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-          </Link>
-        ) : (
-          <Button
-            key={cta.label}
-            variant={cta.variant ?? "blue"}
-            arrow
-            href={cta.href}
-          >
-            {cta.label}
-          </Button>
-        ),
-      )}
-    </div>
-  );
 }
 
 /**
@@ -75,13 +39,13 @@ export function PageHero({
         className={cn(
           "relative z-10 mx-auto px-6 text-center md:px-8",
           standard
-            ? "max-w-[1200px] pt-36 pb-20 lg:pt-40"
-            : "max-w-[760px] pt-32 pb-14 lg:pt-36",
+            ? "max-w-[1200px] pt-44 pb-28 lg:pt-52"
+            : "max-w-[760px] pt-40 pb-24 lg:pt-44",
         )}
       >
         {eyebrow && (
           <Reveal>
-            <Eyebrow variant="bare">{eyebrow}</Eyebrow>
+            <Eyebrow>{eyebrow}</Eyebrow>
           </Reveal>
         )}
 
@@ -89,10 +53,8 @@ export function PageHero({
           as="h1"
           delay={0.08}
           className={cn(
-            "mt-5 text-balance font-display",
-            standard
-              ? "text-hero"
-              : "text-[clamp(32px,5vw,52px)] font-extrabold leading-[1.3] tracking-[-1.5px]",
+            "mt-4 text-balance font-display",
+            standard ? "text-hero" : "text-h2",
           )}
           segments={[
             { text: headline.lead },
@@ -105,13 +67,13 @@ export function PageHero({
 
         {subhead && (
           <Reveal delay={0.16}>
-            <p className="mt-6 text-base text-secondary sm:text-lg">{subhead}</p>
+            <p className="mt-3.5 text-base text-secondary sm:text-lg">{subhead}</p>
           </Reveal>
         )}
 
         {ctas && ctas.length > 0 && (
           <Reveal delay={0.22}>
-            <PageHeroCtas ctas={ctas} />
+            <CtaGroup ctas={ctas} className="mt-8 justify-center" />
           </Reveal>
         )}
 

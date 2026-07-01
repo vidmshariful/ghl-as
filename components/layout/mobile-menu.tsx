@@ -5,7 +5,6 @@ import Link from "next/link";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { X, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { Logo } from "@/components/layout/logo";
 import { primaryNav, isNavGroup, ctas, siteConfig } from "@/content/site";
 
@@ -132,12 +131,9 @@ export function MobileMenu({ open, onClose, onOpenSearch }: MobileMenuProps) {
               <Button variant="blue" arrow href={ctas.browse.href} onClick={onClose}>
                 {ctas.browse.label}
               </Button>
-              <div className="flex items-center justify-between">
-                <Button variant="ghost" size="sm" href={ctas.book.href} onClick={onClose}>
-                  {ctas.book.label}
-                </Button>
-                <ThemeToggle />
-              </div>
+              <Button variant="ghost" size="sm" href={ctas.book.href} onClick={onClose}>
+                {ctas.book.label}
+              </Button>
               <p className="mt-1 text-xs text-tertiary">
                 {siteConfig.notAffiliated}
               </p>

@@ -61,8 +61,6 @@ export const primaryNav: NavEntry[] = [
     ],
   },
   { label: "Our Work", href: "/our-work" },
-  // TODO: confirm — pricing tiers currently live on the Video Editing page.
-  { label: "Pricing", href: "/video-editing" },
 ];
 
 export const footerNav: { title: string; links: NavLink[] }[] = [

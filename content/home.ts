@@ -9,6 +9,10 @@ import {
   Zap,
   BadgeCheck,
   LibraryBig,
+  VideoOff,
+  Hourglass,
+  Palette,
+  Brush,
 } from "lucide-react";
 import { siteConfig, ctas } from "./site";
 
@@ -24,11 +28,6 @@ interface Stat {
   prefix?: string;
   suffix?: string;
   label: string;
-}
-interface Quote {
-  quote: string;
-  name: string;
-  role?: string;
 }
 interface Qa {
   question: string;
@@ -48,9 +47,32 @@ export const homeHero = {
     { label: "Browse videos", href: siteConfig.orderUrl, variant: "blue" as const },
     { label: ctas.book.label, href: ctas.book.href, variant: "text" as const },
   ],
-  // TODO: real data — replace with the final hero reel (+ poster frame).
   videoSrc:
-    "https://assets.cdn.filesafe.space/s3JXyf9P6cTSxG7NfF1B/media/6a09af05dbe569a25d999f9f.mp4",
+    "https://assets.cdn.filesafe.space/Ju4F0bHjSGPG09M3c5vt/media/6a450724dc5f2c22a27661e3.mp4",
+  // "What next" CTAs shown in the video popup, one per service path.
+  videoCtas: [
+    {
+      icon: "library" as const,
+      accent: "blue" as const,
+      text: "Need a video fast?",
+      label: "Browse the library",
+      href: "/premade-videos",
+    },
+    {
+      icon: "phone" as const,
+      accent: "gold" as const,
+      text: "Want something custom?",
+      label: "Book a call",
+      href: "/book-a-call",
+    },
+    {
+      icon: "scissors" as const,
+      accent: "green" as const,
+      text: "Need YouTube or course video editing?",
+      label: "See editing plans",
+      href: "/video-editing",
+    },
+  ],
 };
 
 // TODO: real data — credibility figures from Extendly.
@@ -63,46 +85,67 @@ export const homeStats: Stat[] = [
 
 export const homeServices = {
   eyebrow: "What we make",
-  heading: "Three ways to get video",
+  heading: "Three ways to get",
+  headingHighlight: "video",
   description:
     "Premade, custom, or ongoing. Whatever your SaaS needs, there is a path.",
   items: [
     {
       icon: PlaySquare,
+      accent: "blue" as const,
+      gif: "/services/premade.png",
       title: "Premade Videos",
       body: "Ready-made white-label videos, branded to you and ready in days. From $495.",
       href: "/premade-videos",
+      cta: "Browse the library",
     },
     {
       icon: Sparkles,
+      accent: "gold" as const,
+      gif: "/services/custom.png",
       title: "Custom Production",
       body: "Bespoke explainers, demos, and onboarding built from scratch for your brand.",
       href: "/custom-video-production",
+      cta: "Start a project",
+      urgency: "3 of 6 production slots left this month",
     },
     {
       icon: Scissors,
+      accent: "green" as const,
+      gif: "/services/editing.png",
       title: "Video Editing",
       body: "Ongoing editing for HighLevel creators who publish on a schedule.",
       href: "/video-editing",
+      cta: "See the plans",
+      urgency: "Only 4 new client spots this month",
     },
-  ] satisfies Feature[],
+  ],
+  combo: {
+    title: "Need a mix of services?",
+    body: "Want premade and custom, or custom plus ongoing editing? Tell us what you are after and we will put together a combined offer built around your goals.",
+    cta: { label: "Schedule a call", href: "/book-a-call" },
+  },
 };
 
 export const homeProblem = {
   eyebrow: "The video gap",
-  heading: "Your video undersells your software",
+  heading: "Your video undersells",
+  headingHighlight: "your software",
   intro:
     "Resellers pitch real platforms with Loom clips and stock demos. The product looks unfinished before the call ends.",
   cards: [
     {
+      icon: VideoOff,
       title: "Weak demos",
       body: "A rough screen recording makes a powerful platform feel like a hobby. Prospects hesitate.",
     },
     {
+      icon: Hourglass,
       title: "Slow and costly",
       body: "Custom production takes weeks and drains budget, so the video never gets made.",
     },
     {
+      icon: Palette,
       title: "Off-brand look",
       body: "Generic videos do not match your brand, so your SaaS looks like everyone else.",
     },
@@ -113,10 +156,26 @@ export const homeSolution = {
   eyebrow: "The fix",
   headline: { lead: "Professional video, ready ", highlight: "in days" },
   body: "Browse the library, pick what fits, and we brand it to you. You see the exact video before you pay.",
-  points: [
-    "Branded to your logo, colors, and name",
-    "Full commercial rights, ready to publish",
-    "Preview every video before you buy",
+  // Mirrors the three problems above, in order.
+  cards: [
+    {
+      icon: Eye,
+      accent: "blue" as const,
+      title: "See it before you buy",
+      body: "Preview the exact video first. What you watch is what you publish.",
+    },
+    {
+      icon: Zap,
+      accent: "gold" as const,
+      title: "Ready in days",
+      body: "One flat price, branded and delivered fast. No long timelines.",
+    },
+    {
+      icon: Brush,
+      accent: "green" as const,
+      title: "Branded to you",
+      body: "Your logo, colors, and name throughout. It looks made for your SaaS.",
+    },
   ],
   cta: ctas.browse,
 };
@@ -126,13 +185,20 @@ export const homeLibrary = {
   headline: { lead: "See before you ", highlight: "buy" },
   description:
     "Real videos, not promises. Watch the exact result, then make it yours.",
-  featuredIds: ["all-in-one-platform", "ai-capabilities-demo", "scroll-stopper-ad"],
+  featuredIds: [
+    "speed-to-lead",
+    "answering-service-247",
+    "ai-bos-explainer",
+    "answering-service-home",
+    "answering-service-healthcare",
+  ],
   cta: { label: "Browse the full library", href: "/premade-videos" },
 };
 
 export const homeWhy = {
   eyebrow: "Why GHL Animation Studios",
-  heading: "Built for the ecosystem",
+  heading: "Built for the",
+  headingHighlight: "ecosystem",
   description:
     "Backed by Extendly, the white-label team thousands of HighLevel agencies already trust.",
   items: [
@@ -169,27 +235,10 @@ export const homeWhy = {
   ] satisfies Feature[],
 };
 
-// TODO: real data — Extendly client quotes, names, roles, photos, and logos.
-export const homeTestimonials = {
-  eyebrow: "Proof",
-  heading: "Agencies that trust the work",
-  items: [
-    {
-      quote: "Real Extendly client quote, up to 30 words.",
-      name: "Placeholder Name",
-      role: "Role, Company",
-    },
-    {
-      quote: "Real Extendly client quote, up to 30 words.",
-      name: "Placeholder Name",
-      role: "Role, Company",
-    },
-  ] satisfies Quote[],
-};
-
 export const homeFaqs = {
   eyebrow: "Questions",
-  heading: "Good questions, answered",
+  heading: "Good questions,",
+  headingHighlight: "answered",
   items: [
     {
       question: "Are the videos really branded to me?",
@@ -222,5 +271,20 @@ export const homeFinalCta = {
   ctas: [
     { ...ctas.browse, variant: "blue" as const },
     { ...ctas.book, variant: "ghost" as const },
+  ],
+  checks: ["No retainers", "Preview before you pay", "Ready in days"],
+  steps: [
+    {
+      title: "Browse the library",
+      body: "Find the explainer, demo, or ad that fits your platform.",
+    },
+    {
+      title: "Preview the exact video",
+      body: "Watch the real result before you spend a dollar.",
+    },
+    {
+      title: "Launch this week",
+      body: "We brand it to you and deliver in days, not months.",
+    },
   ],
 };

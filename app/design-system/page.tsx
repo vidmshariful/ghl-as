@@ -4,12 +4,9 @@ import { notFound } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 import { Eyebrow } from "@/components/ui/eyebrow";
-import { Badge } from "@/components/ui/badge";
 import { SectionWrapper } from "@/components/ui/section-wrapper";
 import { Reveal } from "@/components/ui/reveal";
-import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { Footer } from "@/components/layout/footer";
-import { DualCtaCard } from "@/components/cards/dual-cta-card";
 import { FeatureCard } from "@/components/cards/feature-card";
 import { TierCard } from "@/components/cards/tier-card";
 import { StatStrip } from "@/components/cards/stat-strip";
@@ -23,8 +20,17 @@ import { Parallax } from "@/components/ui/parallax";
 import { PageHero } from "@/components/sections/page-hero";
 import { CtaBand } from "@/components/sections/cta-band";
 import { ProcessSteps } from "@/components/sections/process-steps";
-import { editingTiers } from "@/content/pricing";
-import { Eye, ShieldCheck, Zap, MonitorPlay } from "lucide-react";
+import { editingTiers } from "@/content/editing-plans";
+import {
+  Eye,
+  ShieldCheck,
+  Zap,
+  MonitorPlay,
+  PlaySquare,
+  Sparkles,
+  Scissors,
+} from "lucide-react";
+import { ServiceCard } from "@/components/cards/service-card";
 import {
   NavDemo,
   MobileMenuDemo,
@@ -99,7 +105,6 @@ const NAV = [
   { href: "#foundation", label: "Foundation" },
   { href: "#buttons", label: "Buttons" },
   { href: "#eyebrow", label: "Eyebrow" },
-  { href: "#badge", label: "Badge" },
   { href: "#section", label: "Section" },
   { href: "#reveal", label: "Reveal" },
   { href: "#motion", label: "Motion" },
@@ -143,7 +148,6 @@ export default function DesignSystemPage() {
               </a>
             ))}
           </nav>
-          <ThemeToggle className="ml-auto" />
         </div>
       </div>
 
@@ -320,23 +324,7 @@ export default function DesignSystemPage() {
             >
               <div className="flex flex-wrap items-center gap-4">
                 <Eyebrow>The library</Eyebrow>
-                <Eyebrow variant="bare">Animated video library</Eyebrow>
-              </div>
-            </Block>
-          </div>
-
-          {/* Badge */}
-          <div className="mt-12">
-            <GroupTitle id="badge" label="Badge" />
-            <Block
-              title="Glass trust pills"
-              caption="Gold star plus label. The Hero floats these; here they are static."
-            >
-              <div className="flex flex-wrap items-center gap-3">
-                <Badge>See before you buy</Badge>
-                <Badge>Fully white-label</Badge>
-                <Badge>Ready in days</Badge>
-                <Badge>Backed by Extendly</Badge>
+                <Eyebrow>Animated video library</Eyebrow>
               </div>
             </Block>
           </div>
@@ -591,6 +579,40 @@ export default function DesignSystemPage() {
         <div className="mt-20 mb-10">
           <GroupTitle id="components" label="Components" />
 
+          <Block
+            title="ServiceCard · accent colors, urgency, hover glow"
+            caption="Home service cards: a service GIF (placeholder until real), brand accent color (blue / gold / green), title, description, optional urgency line, and an arrow CTA. The whole card links to the service page and grows the signature glowing border on hover."
+          >
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+              <ServiceCard
+                icon={PlaySquare}
+                accent="blue"
+                title="Premade Videos"
+                body="Ready-made white-label videos, branded to you and ready in days."
+                href="/premade-videos"
+                cta="Browse the library"
+              />
+              <ServiceCard
+                icon={Sparkles}
+                accent="gold"
+                title="Custom Production"
+                body="Bespoke explainers and demos built from scratch for your brand."
+                href="/custom-video-production"
+                cta="Start a project"
+                urgency="3 of 6 production slots left this month"
+              />
+              <ServiceCard
+                icon={Scissors}
+                accent="green"
+                title="Video Editing"
+                body="Ongoing editing for HighLevel creators who publish on a schedule."
+                href="/video-editing"
+                cta="See the plans"
+                urgency="Only 4 new client spots this month"
+              />
+            </div>
+          </Block>
+
           <div className="mt-2">
             <h3
               id="videocard"
@@ -606,25 +628,6 @@ export default function DesignSystemPage() {
             </Block>
           </div>
 
-          <Block
-            title="DualCtaCard · blue and ghost"
-            caption="Two-up choice card used in the Hero. Glassy surface, hover lift. The blue (primary) variant carries the diagonal arrow."
-          >
-            <div className="grid max-w-[540px] grid-cols-1 gap-3 sm:grid-cols-2">
-              <DualCtaCard
-                title="Browse the library"
-                body="Ready-made videos, branded to you. From $495."
-                cta={{ label: "Browse videos", href: "/premade-videos" }}
-                variant="blue"
-              />
-              <DualCtaCard
-                title="Not sure what fits?"
-                body="Get a quick recommendation, no pressure."
-                cta={{ label: "Book a call", href: "/book-a-call" }}
-                variant="ghost"
-              />
-            </div>
-          </Block>
 
           <Block
             title="FeatureCard · with icon (bottom-anchored), without, and linked"

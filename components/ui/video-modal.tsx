@@ -1,11 +1,54 @@
 "use client";
 
 import * as React from "react";
+import Link from "next/link";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { X } from "lucide-react";
+import { X, ArrowUpRight, LibraryBig, PhoneCall, Scissors } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
+
+/** Icons resolved by key so the action data stays serializable (server→client). */
+const ACTION_ICONS = {
+  library: LibraryBig,
+  phone: PhoneCall,
+  scissors: Scissors,
+} as const;
+
+type ActionAccent = "blue" | "gold" | "green";
+
+const ACTION_ACCENTS: Record<
+  ActionAccent,
+  { grad: string; soft: string; glow: string; fg: string }
+> = {
+  blue: {
+    grad: "linear-gradient(155deg, #5a9bf7, #1f63d6)",
+    soft: "rgba(45,127,240,0.16)",
+    glow: "rgba(45,127,240,0.40)",
+    fg: "#fff",
+  },
+  gold: {
+    grad: "linear-gradient(155deg, #f7c83a, #e0980a)",
+    soft: "rgba(242,184,22,0.18)",
+    glow: "rgba(242,184,22,0.40)",
+    fg: "#0b1020",
+  },
+  green: {
+    grad: "linear-gradient(155deg, #5fd07b, #2c9a47)",
+    soft: "rgba(67,185,91,0.16)",
+    glow: "rgba(67,185,91,0.40)",
+    fg: "#fff",
+  },
+};
+
+export interface ModalAction {
+  /** The prompt/question shown above the button. */
+  text: string;
+  label: string;
+  href: string;
+  icon?: keyof typeof ACTION_ICONS;
+  accent?: ActionAccent;
+}
 
 interface VideoModalProps {
   open: boolean;
@@ -14,10 +57,19 @@ interface VideoModalProps {
   title?: string;
   /** When present, a buy line + Buy now button shows under the video. */
   buy?: { price: number; href: string };
+  /** When present, a gradient 3-up "what next" CTA row shows under the video. */
+  actions?: ModalAction[];
 }
 
 /** Lightbox video player. Autoplays (user-initiated) with sound + controls. */
-export function VideoModal({ open, onClose, src, title, buy }: VideoModalProps) {
+export function VideoModal({
+  open,
+  onClose,
+  src,
+  title,
+  buy,
+  actions,
+}: VideoModalProps) {
   return (
     <AnimatePresence>
       {open && (
@@ -26,6 +78,7 @@ export function VideoModal({ open, onClose, src, title, buy }: VideoModalProps) 
           src={src}
           title={title}
           buy={buy}
+          actions={actions}
         />
       )}
     </AnimatePresence>
@@ -37,6 +90,7 @@ function VideoModalPanel({
   src,
   title,
   buy,
+  actions,
 }: Omit<VideoModalProps, "open">) {
   const reduce = useReducedMotion();
 
@@ -113,6 +167,59 @@ function VideoModalPanel({
             <Button variant="blue" arrow href={buy.href}>
               Buy now
             </Button>
+          </div>
+        )}
+
+        {actions && actions.length > 0 && (
+          <div className="grid gap-3 border-t border-line bg-surface-2/40 p-4 sm:grid-cols-3">
+            {actions.map((a) => {
+              const ac = ACTION_ACCENTS[a.accent ?? "blue"];
+              const Icon = a.icon ? ACTION_ICONS[a.icon] : null;
+              return (
+                <Link
+                  key={a.label}
+                  href={a.href}
+                  className="group/cta relative flex h-full flex-col rounded-xl border border-line p-5 transition-all duration-300 hover:-translate-y-[3px]"
+                  style={{
+                    background: `linear-gradient(160deg, ${ac.soft}, transparent 72%)`,
+                  }}
+                >
+                  {/* hover halo */}
+                  <span
+                    aria-hidden
+                    className="pointer-events-none absolute -inset-1.5 -z-10 rounded-2xl opacity-0 blur-lg transition-opacity duration-300 group-hover/cta:opacity-100"
+                    style={{
+                      background: `radial-gradient(60% 60% at 50% 40%, ${ac.glow}, transparent 70%)`,
+                    }}
+                  />
+                  {Icon && (
+                    <span
+                      className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl text-white transition-transform duration-300 ease-out group-hover/cta:-rotate-6 group-hover/cta:scale-105"
+                      style={{
+                        background: ac.grad,
+                        boxShadow: `0 10px 20px ${ac.glow}, inset 0 1.5px 0 rgba(255,255,255,0.5), inset 0 -3px 8px rgba(0,0,0,0.18)`,
+                      }}
+                    >
+                      <Icon className="h-5 w-5" strokeWidth={2.2} />
+                    </span>
+                  )}
+                  <p className="text-[15px] font-semibold leading-snug text-primary">
+                    {a.text}
+                  </p>
+                  <span
+                    className="mt-auto flex w-fit items-center gap-1.5 rounded-lg px-4 py-2.5 text-[13px] font-bold transition-transform duration-200 group-hover/cta:-translate-y-px"
+                    style={{
+                      background: ac.grad,
+                      color: ac.fg,
+                      boxShadow: `0 8px 18px ${ac.glow}`,
+                    }}
+                  >
+                    {a.label}
+                    <ArrowUpRight className="h-4 w-4" />
+                  </span>
+                </Link>
+              );
+            })}
           </div>
         )}
       </motion.div>

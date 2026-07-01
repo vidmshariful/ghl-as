@@ -5,13 +5,14 @@ import { Stagger } from "@/components/ui/stagger";
 import { PageHero } from "@/components/sections/page-hero";
 import { CtaBand } from "@/components/sections/cta-band";
 import { ProcessSteps } from "@/components/sections/process-steps";
-import { FeatureCard } from "@/components/cards/feature-card";
+import { FeatureGrid } from "@/components/sections/feature-grid";
 import { TierCard } from "@/components/cards/tier-card";
-import { StatStrip } from "@/components/cards/stat-strip";
+import { StatBand } from "@/components/sections/stat-band";
 import { SampleCard } from "@/components/cards/sample-card";
-import { FaqItem } from "@/components/cards/faq-item";
+import { TestimonialsSection } from "@/components/sections/testimonials-section";
+import { FaqSection } from "@/components/sections/faq-section";
 
-import { editingTiers } from "@/content/pricing";
+import { editingTiers } from "@/content/editing-plans";
 import {
   editingHero,
   editingWhoFor,
@@ -47,15 +48,9 @@ export default function VideoEditingPage() {
         eyebrow={editingWhoFor.eyebrow}
         heading={editingWhoFor.heading}
         description={editingWhoFor.description}
+        className="theme-light bg-bg"
       >
-        <Stagger
-          className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4"
-          itemClassName="h-full"
-        >
-          {editingWhoFor.items.map((f) => (
-            <FeatureCard key={f.title} {...f} />
-          ))}
-        </Stagger>
+        <FeatureGrid items={editingWhoFor.items} columns={4} />
       </SectionWrapper>
 
       {/* Problem */}
@@ -64,14 +59,7 @@ export default function VideoEditingPage() {
         heading={editingProblem.heading}
         description={editingProblem.intro}
       >
-        <Stagger
-          className="grid grid-cols-1 gap-4 sm:grid-cols-3"
-          itemClassName="h-full"
-        >
-          {editingProblem.cards.map((c) => (
-            <FeatureCard key={c.title} {...c} />
-          ))}
-        </Stagger>
+        <FeatureGrid items={editingProblem.cards} columns={3} />
       </SectionWrapper>
 
       {/* Process */}
@@ -79,6 +67,7 @@ export default function VideoEditingPage() {
         eyebrow={editingProcess.eyebrow}
         heading={editingProcess.heading}
         description={editingProcess.description}
+        className="theme-light bg-bg"
       >
         <ProcessSteps steps={editingProcess.steps} columns={3} />
       </SectionWrapper>
@@ -92,7 +81,7 @@ export default function VideoEditingPage() {
         className="scroll-mt-24"
       >
         <Stagger
-          className="grid grid-cols-1 gap-4 md:grid-cols-3"
+          className="grid grid-cols-1 gap-5 md:grid-cols-3"
           itemClassName="h-full"
         >
           {editingTiers.map((tier) => (
@@ -105,40 +94,24 @@ export default function VideoEditingPage() {
       <SectionWrapper
         eyebrow={editingIncludes.eyebrow}
         heading={editingIncludes.heading}
+        cta={{ label: "See plans", href: "#plans" }}
+        className="theme-light bg-bg"
       >
-        <Stagger
-          className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4"
-          itemClassName="h-full"
-        >
-          {editingIncludes.items.map((f) => (
-            <FeatureCard key={f.title} {...f} />
-          ))}
-        </Stagger>
+        <FeatureGrid items={editingIncludes.items} columns={4} />
       </SectionWrapper>
 
-      {/* Turnaround stats (full-bleed band) */}
-      <section className="relative overflow-hidden border-y border-line bg-surface-1 py-20 md:py-24">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-x-0 top-0 h-[360px]"
-          style={{
-            background:
-              "radial-gradient(50% 70% at 50% 0%, var(--blue-glow), transparent 65%)",
-          }}
-        />
-        <div className="relative mx-auto max-w-[1000px] px-6 md:px-8">
-          <StatStrip stats={editingStats} />
-        </div>
-      </section>
+      {/* Turnaround stats */}
+      <StatBand stats={editingStats} />
 
       {/* Sample edits */}
       <SectionWrapper
         eyebrow={editingSamples.eyebrow}
         heading={editingSamples.heading}
         description={editingSamples.description}
+        className="theme-light bg-bg"
       >
         <Stagger
-          className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3"
+          className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3"
           itemClassName="h-full"
         >
           {editingSamples.items.map((s, i) => (
@@ -147,14 +120,16 @@ export default function VideoEditingPage() {
         </Stagger>
       </SectionWrapper>
 
+      {/* Social proof (global) */}
+      <TestimonialsSection />
+
       {/* FAQ */}
-      <SectionWrapper eyebrow={editingFaqs.eyebrow} heading={editingFaqs.heading}>
-        <Stagger className="mx-auto flex max-w-[760px] flex-col gap-2.5">
-          {editingFaqs.items.map((f) => (
-            <FaqItem key={f.question} {...f} />
-          ))}
-        </Stagger>
-      </SectionWrapper>
+      <FaqSection
+        eyebrow={editingFaqs.eyebrow}
+        heading={editingFaqs.heading}
+        items={editingFaqs.items}
+        className="theme-light bg-bg"
+      />
 
       {/* Final CTA */}
       <CtaBand {...editingFinalCta} />

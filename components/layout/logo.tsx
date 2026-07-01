@@ -6,7 +6,7 @@ import { siteConfig } from "@/content/site";
 /**
  * Brand lockup. The logo PNG is transparent with a dark wordmark, so it sits on
  * a white chip to stay legible in both themes. The chip carries the animated
- * rotating blue→gold border (.tier-glow), matching the pricing tier.
+ * rotating blue border (.tier-glow), matching the pricing tier.
  */
 export function Logo({
   className,

@@ -3,9 +3,10 @@ import type { Metadata } from "next";
 import { SectionWrapper } from "@/components/ui/section-wrapper";
 import { Reveal } from "@/components/ui/reveal";
 import { PageHero } from "@/components/sections/page-hero";
+import { CtaBand } from "@/components/sections/cta-band";
 import { ContactForm } from "@/components/sections/contact-form";
 
-import { contactHero, contactBlock } from "@/content/contact";
+import { contactHero, contactBlock, contactFinalCta } from "@/content/contact";
 
 export const metadata: Metadata = {
   title: "Contact · GHL Animation Studios",
@@ -23,7 +24,7 @@ export default function ContactPage() {
       />
 
       <SectionWrapper
-        className="!pt-0"
+        className="!pt-0 theme-light bg-bg"
         heading={contactBlock.heading}
         description={contactBlock.description}
       >
@@ -41,6 +42,9 @@ export default function ContactPage() {
           <p className="mt-2 text-xs text-tertiary">{contactBlock.micro}</p>
         </Reveal>
       </SectionWrapper>
+
+      {/* Final CTA */}
+      <CtaBand {...contactFinalCta} />
     </>
   );
 }

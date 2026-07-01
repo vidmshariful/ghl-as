@@ -4,18 +4,24 @@ import { SectionWrapper } from "@/components/ui/section-wrapper";
 import { Stagger } from "@/components/ui/stagger";
 import { PageHero } from "@/components/sections/page-hero";
 import { CtaBand } from "@/components/sections/cta-band";
-import { ProcessSteps } from "@/components/sections/process-steps";
-import { FeatureCard } from "@/components/cards/feature-card";
+import { ProcessStack } from "@/components/sections/process-stack";
+import { FeatureGrid } from "@/components/sections/feature-grid";
+import { ImageCard } from "@/components/cards/image-card";
+import { PriceCard } from "@/components/cards/price-card";
 import { SampleCard } from "@/components/cards/sample-card";
-import { FaqItem } from "@/components/cards/faq-item";
+import { QuoteForm } from "@/components/sections/quote-form";
+import { TestimonialsSection } from "@/components/sections/testimonials-section";
+import { FaqSection } from "@/components/sections/faq-section";
 
 import {
   customHero,
   customWhoFor,
-  customWhatWeProduce,
+  customPillars,
   customProcess,
+  customPricing,
   customSamples,
   customDifference,
+  customQuote,
   customFaqs,
   customFinalCta,
 } from "@/content/custom";
@@ -42,40 +48,54 @@ export default function CustomVideoProductionPage() {
         eyebrow={customWhoFor.eyebrow}
         heading={customWhoFor.heading}
         description={customWhoFor.description}
+        className="theme-light bg-bg"
       >
-        <Stagger
-          className="grid grid-cols-1 gap-4 sm:grid-cols-3"
-          itemClassName="h-full"
-        >
-          {customWhoFor.cards.map((c) => (
-            <FeatureCard key={c.title} {...c} />
-          ))}
-        </Stagger>
+        <FeatureGrid items={customWhoFor.cards} columns={3} />
       </SectionWrapper>
 
-      {/* What we produce */}
+      {/* What goes into every video (pillars) */}
       <SectionWrapper
-        eyebrow={customWhatWeProduce.eyebrow}
-        heading={customWhatWeProduce.heading}
-        description={customWhatWeProduce.description}
+        eyebrow={customPillars.eyebrow}
+        heading={customPillars.heading}
+        description={customPillars.description}
       >
         <Stagger
-          className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4"
+          className="grid grid-cols-1 gap-5 sm:grid-cols-3"
           itemClassName="h-full"
         >
-          {customWhatWeProduce.items.map((f) => (
-            <FeatureCard key={f.title} {...f} />
+          {customPillars.items.map((p) => (
+            <ImageCard key={p.title} {...p} />
           ))}
         </Stagger>
       </SectionWrapper>
 
-      {/* Process */}
+      {/* How we make your video (scroll-stack) */}
       <SectionWrapper
         eyebrow={customProcess.eyebrow}
         heading={customProcess.heading}
         description={customProcess.description}
+        className="theme-light bg-bg"
       >
-        <ProcessSteps steps={customProcess.steps} columns={4} />
+        <ProcessStack steps={customProcess.steps} />
+      </SectionWrapper>
+
+      {/* Pricing */}
+      <SectionWrapper
+        eyebrow={customPricing.eyebrow}
+        heading={customPricing.heading}
+        description={customPricing.description}
+      >
+        <Stagger
+          className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4"
+          itemClassName="h-full"
+        >
+          {customPricing.tiers.map((t) => (
+            <PriceCard key={t.type} {...t} cta={customPricing.cta} />
+          ))}
+        </Stagger>
+        <p className="mt-8 text-center text-sm text-tertiary">
+          {customPricing.micro}
+        </p>
       </SectionWrapper>
 
       {/* Sample work */}
@@ -83,9 +103,10 @@ export default function CustomVideoProductionPage() {
         eyebrow={customSamples.eyebrow}
         heading={customSamples.heading}
         description={customSamples.description}
+        className="theme-light bg-bg"
       >
         <Stagger
-          className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3"
+          className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3"
           itemClassName="h-full"
         >
           {customSamples.items.map((s, i) => (
@@ -100,24 +121,32 @@ export default function CustomVideoProductionPage() {
         heading={customDifference.heading}
         description={customDifference.description}
       >
-        <Stagger
-          className="grid grid-cols-1 gap-4 sm:grid-cols-3"
-          itemClassName="h-full"
-        >
-          {customDifference.cards.map((c) => (
-            <FeatureCard key={c.title} {...c} />
-          ))}
-        </Stagger>
+        <FeatureGrid items={customDifference.cards} columns={3} />
       </SectionWrapper>
 
-      {/* FAQ */}
-      <SectionWrapper eyebrow={customFaqs.eyebrow} heading={customFaqs.heading}>
-        <Stagger className="mx-auto flex max-w-[760px] flex-col gap-2.5">
-          {customFaqs.items.map((f) => (
-            <FaqItem key={f.question} {...f} />
-          ))}
-        </Stagger>
+      {/* Request a quote */}
+      <SectionWrapper
+        id="quote"
+        eyebrow={customQuote.eyebrow}
+        heading={customQuote.heading}
+        description={customQuote.description}
+        className="theme-light bg-bg scroll-mt-24"
+      >
+        <div className="mx-auto max-w-[720px]">
+          <QuoteForm />
+        </div>
       </SectionWrapper>
+
+      {/* Social proof (global) */}
+      <TestimonialsSection />
+
+      {/* FAQ */}
+      <FaqSection
+        eyebrow={customFaqs.eyebrow}
+        heading={customFaqs.heading}
+        items={customFaqs.items}
+        className="theme-light bg-bg"
+      />
 
       {/* Final CTA */}
       <CtaBand {...customFinalCta} />

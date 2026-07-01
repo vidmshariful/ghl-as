@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans, Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
-import { ThemeProvider } from "@/components/theme-provider";
 import { GrainOverlay } from "@/components/layout/grain-overlay";
 
 const jakarta = Plus_Jakarta_Sans({
@@ -43,15 +42,8 @@ export default function RootLayout({
       className={`${jakarta.variable} ${inter.variable} ${jetbrains.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-bg text-primary">
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
-          enableSystem
-          disableTransitionOnChange
-        >
-          {children}
-          <GrainOverlay />
-        </ThemeProvider>
+        {children}
+        <GrainOverlay />
       </body>
     </html>
   );

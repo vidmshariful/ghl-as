@@ -6,7 +6,6 @@ import { usePathname } from "next/navigation";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Search, Menu, ChevronDown, ArrowUpRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { Logo } from "@/components/layout/logo";
 import { MobileMenu } from "@/components/layout/mobile-menu";
 import { SearchDialog } from "@/components/layout/search-dialog";
@@ -93,24 +92,38 @@ export function Nav({
     <>
       <header
         ref={navRef}
-        className={cn(
-          embedded ? "relative" : "fixed inset-x-0 top-0 z-50",
-          "transition-all duration-300",
-          scrolled
-            ? "border-b border-line bg-bg/80 shadow-[0_8px_30px_rgba(0,0,0,0.12)] backdrop-blur-md"
-            : "border-b border-transparent bg-transparent",
-        )}
+        className={cn(embedded ? "relative" : "fixed inset-x-0 top-0 z-50")}
       >
+        {/* Full-width glass bar (scroll state) — cross-fades in */}
+        <div
+          aria-hidden
+          className={cn(
+            "pointer-events-none absolute inset-0 border-b border-line bg-bg/80 shadow-[0_8px_30px_rgba(0,0,0,0.12)] backdrop-blur-md transition-opacity duration-500 ease-out",
+            scrolled ? "opacity-100" : "opacity-0",
+          )}
+        />
+
+        {/* Centered container; only the top gap animates, so content never jumps */}
         <div
           className={cn(
-            "relative mx-auto flex w-full max-w-[1200px] items-center justify-between gap-4 px-6 transition-all duration-300 md:px-8",
-            scrolled ? "py-2.5" : "py-4",
+            "mx-auto max-w-[1200px] px-6 transition-[padding] duration-500 ease-out md:px-8",
+            scrolled ? "pt-0" : "pt-4",
           )}
         >
-          <Logo />
+          <div className="relative flex items-center justify-between gap-4 px-5 py-2.5">
+            {/* Floating glass pill (top state) — cross-fades out */}
+            <div
+              aria-hidden
+              className={cn(
+                "pointer-events-none absolute inset-0 z-0 rounded-md border border-line bg-bg/65 backdrop-blur-md transition-opacity duration-500 ease-out",
+                scrolled ? "opacity-0" : "opacity-100",
+              )}
+            />
+
+            <Logo className="relative z-10" />
 
           {/* Centered menu pill */}
-          <nav className="absolute left-1/2 hidden -translate-x-1/2 lg:block">
+          <nav className="absolute left-1/2 z-10 hidden -translate-x-1/2 lg:block">
             <ul className="flex items-center rounded-lg border border-line-strong p-[3px]">
               {primaryNav.map((entry, i) => (
                 <React.Fragment key={entry.label}>
@@ -246,7 +259,7 @@ export function Nav({
           </nav>
 
           {/* Right cluster */}
-          <div className="flex items-center gap-2">
+          <div className="relative z-10 flex items-center gap-2">
             <button
               type="button"
               aria-label="Search"
@@ -256,7 +269,6 @@ export function Nav({
             >
               <Search className="h-[15px] w-[15px]" />
             </button>
-            <ThemeToggle />
             <Button
               variant="blue"
               size="sm"
@@ -275,6 +287,7 @@ export function Nav({
               <Menu className="h-[18px] w-[18px]" />
             </button>
           </div>
+        </div>
         </div>
       </header>
 

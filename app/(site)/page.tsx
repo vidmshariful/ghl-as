@@ -1,5 +1,3 @@
-import { Check } from "lucide-react";
-
 import { SectionWrapper } from "@/components/ui/section-wrapper";
 import { Stagger } from "@/components/ui/stagger";
 import { Reveal } from "@/components/ui/reveal";
@@ -7,39 +5,42 @@ import { RevealText } from "@/components/ui/reveal-text";
 import { Eyebrow } from "@/components/ui/eyebrow";
 import { Button } from "@/components/ui/button";
 import { Marquee } from "@/components/ui/marquee";
+import { Parallax } from "@/components/ui/parallax";
 import { Hero } from "@/components/sections/hero";
 import { CtaBand } from "@/components/sections/cta-band";
-import { FeatureCard } from "@/components/cards/feature-card";
+import { ProblemSolution } from "@/components/sections/problem-solution";
+import { WhyCard } from "@/components/cards/why-card";
+import { type FeatureAccent } from "@/components/cards/feature-card";
+import { ServiceCard } from "@/components/cards/service-card";
 import { VideoCard } from "@/components/cards/video-card";
-import { StatStrip } from "@/components/cards/stat-strip";
-import { Testimonial } from "@/components/cards/testimonial";
-import { FaqItem } from "@/components/cards/faq-item";
+import { StatBand } from "@/components/sections/stat-band";
+import { TestimonialsSection } from "@/components/sections/testimonials-section";
+import { FaqSection } from "@/components/sections/faq-section";
 
 import { videos, type Video } from "@/content/videos";
 import {
   homeHero,
   homeStats,
   homeServices,
-  homeProblem,
-  homeSolution,
   homeLibrary,
   homeWhy,
-  homeTestimonials,
   homeFaqs,
   homeFinalCta,
 } from "@/content/home";
-import { cn } from "@/lib/utils";
 
 const featured = homeLibrary.featuredIds
   .map((id) => videos.find((v) => v.id === id))
   .filter((v): v is Video => Boolean(v));
 
+const WHY_ACCENTS: FeatureAccent[] = ["blue", "green", "gold", "coral"];
+
 export default function HomePage() {
   return (
     <>
+      {/* Hook */}
       <Hero {...homeHero} />
 
-      {/* Trust marquee */}
+      {/* Trust strip */}
       <section className="border-y border-line bg-surface-1/50 py-10">
         <div className="mx-auto max-w-[1200px] px-6 md:px-8">
           <p className="mb-7 text-center font-mono text-[11px] uppercase tracking-[2px] text-tertiary">
@@ -51,7 +52,7 @@ export default function HomePage() {
               (name, i) => (
                 <div
                   key={i}
-                  className="flex h-9 w-32 items-center justify-center rounded-lg border border-line bg-surface-2 font-display text-sm font-bold text-tertiary"
+                  className="font-display text-lg font-semibold text-tertiary/55"
                 >
                   {name}
                 </div>
@@ -61,221 +62,148 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Services */}
+      {/* Problem to solution (tension, then the fix) */}
+      <ProblemSolution />
+
+      {/* Services (the offer) */}
       <SectionWrapper
         align="center"
         eyebrow={homeServices.eyebrow}
         heading={homeServices.heading}
+        headingHighlight={homeServices.headingHighlight}
         description={homeServices.description}
-        className="!py-20 md:!py-24"
+        className="py-24 md:py-36"
       >
         <Stagger
-          className="grid grid-cols-1 gap-4 sm:grid-cols-3"
+          className="grid grid-cols-1 gap-5 sm:grid-cols-3"
           itemClassName="h-full"
         >
           {homeServices.items.map((s) => (
-            <FeatureCard key={s.title} {...s} />
+            <ServiceCard key={s.title} {...s} />
           ))}
         </Stagger>
-      </SectionWrapper>
 
-      {/* Problem (quieter secondary) */}
-      <SectionWrapper
-        align="center"
-        eyebrow={homeProblem.eyebrow}
-        heading={homeProblem.heading}
-        description={homeProblem.intro}
-        className="!py-20 md:!py-24"
-      >
-        <Stagger
-          className="grid grid-cols-1 gap-4 sm:grid-cols-3"
-          itemClassName="h-full"
-        >
-          {homeProblem.cards.map((c) => (
-            <FeatureCard key={c.title} {...c} />
-          ))}
-        </Stagger>
-      </SectionWrapper>
-
-      {/* Solution (asymmetric split) */}
-      <section className="relative overflow-hidden py-24 md:py-32">
-        <div className="mx-auto grid max-w-[1200px] items-center gap-12 px-6 md:px-8 lg:grid-cols-[1.05fr_0.95fr]">
-          <div>
-            <Reveal>
-              <Eyebrow>{homeSolution.eyebrow}</Eyebrow>
-            </Reveal>
-            <RevealText
-              as="h2"
-              className="mt-4 max-w-[14ch] font-display text-h2"
-              segments={[
-                { text: homeSolution.headline.lead },
-                { text: homeSolution.headline.highlight, gradient: true },
-              ]}
-            />
-            <Reveal delay={0.1}>
-              <p className="mt-5 max-w-[460px] text-base text-secondary md:text-lg">
-                {homeSolution.body}
+        {/* Combined-offer card */}
+        <Reveal>
+          <div className="card-surface mt-5 grid items-center gap-6 rounded-2xl border border-line p-6 text-left md:grid-cols-[1.5fr_auto] md:p-8">
+            <div>
+              <h3 className="font-display text-[19px] font-bold tracking-[-0.3px] text-primary">
+                {homeServices.combo.title}
+              </h3>
+              <p className="mt-2 max-w-[640px] text-sm text-secondary md:text-base">
+                {homeServices.combo.body}
               </p>
-            </Reveal>
-            <Reveal delay={0.16}>
-              <ul className="mt-7 grid gap-3">
-                {homeSolution.points.map((point) => (
-                  <li
-                    key={point}
-                    className="flex items-center gap-2.5 text-[15px] text-primary"
-                  >
-                    <Check className="h-4 w-4 shrink-0 text-blue" />
-                    {point}
-                  </li>
-                ))}
-              </ul>
-              <div className="mt-8">
-                <Button variant="blue" arrow href={homeSolution.cta.href}>
-                  {homeSolution.cta.label}
-                </Button>
-              </div>
-            </Reveal>
-          </div>
-
-          <Reveal delay={0.1} className="relative">
-            <div
-              aria-hidden
-              className="absolute -inset-8 -z-10 rounded-[40px]"
-              style={{
-                background:
-                  "radial-gradient(60% 60% at 55% 45%, var(--blue-glow), transparent 70%)",
-                filter: "blur(28px)",
-              }}
-            />
-            <div className="mx-auto max-w-[420px] lg:mr-0 lg:ml-auto">
-              {featured[0] && <VideoCard video={featured[0]} />}
             </div>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* Library (big moment) */}
-      <section className="relative overflow-hidden py-28 md:py-36">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-x-0 top-1/4 h-[600px]"
-          style={{
-            background:
-              "radial-gradient(45% 50% at 50% 50%, var(--blue-glow), transparent 65%)",
-          }}
-        />
-        <div className="relative mx-auto max-w-[1200px] px-6 text-center md:px-8">
-          <Reveal>
-            <Eyebrow>{homeLibrary.eyebrow}</Eyebrow>
-          </Reveal>
-          <RevealText
-            as="h2"
-            className="mx-auto mt-4 max-w-[16ch] font-display text-h2"
-            segments={[
-              { text: homeLibrary.headline.lead },
-              { text: homeLibrary.headline.highlight, gradient: true },
-            ]}
-          />
-          <Reveal delay={0.1}>
-            <p className="mx-auto mt-5 max-w-[560px] text-base text-secondary md:text-lg">
-              {homeLibrary.description}
-            </p>
-          </Reveal>
-          <Stagger
-            className="mt-14 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3"
-            itemClassName="h-full"
-          >
-            {featured.map((video) => (
-              <VideoCard key={video.id} video={video} />
-            ))}
-          </Stagger>
-          <Reveal>
-            <div className="mt-12 flex justify-center">
-              <Button variant="ghost" href={homeLibrary.cta.href}>
-                {homeLibrary.cta.label}
+            <div className="md:justify-self-end">
+              <Button variant="blue" arrow href={homeServices.combo.cta.href}>
+                {homeServices.combo.cta.label}
               </Button>
             </div>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* Stats (full-bleed band) */}
-      <section className="relative overflow-hidden border-y border-line bg-surface-1 py-24 md:py-28">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-x-0 top-0 h-[400px]"
-          style={{
-            background:
-              "radial-gradient(50% 70% at 50% 0%, var(--blue-glow), transparent 65%)",
-          }}
-        />
-        <div className="relative mx-auto max-w-[1200px] px-6 md:px-8">
-          <Reveal className="mb-14 text-center">
-            <Eyebrow>By the numbers</Eyebrow>
-          </Reveal>
-          <StatStrip stats={homeStats} />
-        </div>
-      </section>
-
-      {/* Why us (bento) */}
-      <SectionWrapper
-        align="center"
-        eyebrow={homeWhy.eyebrow}
-        heading={homeWhy.heading}
-        description={homeWhy.description}
-      >
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {homeWhy.items.map((f, i) => (
-            <Reveal
-              key={f.title}
-              delay={(i % 4) * 0.06}
-              className={cn("h-full", i < 2 && "lg:col-span-2")}
-            >
-              <FeatureCard {...f} className="h-full" />
-            </Reveal>
-          ))}
-        </div>
+          </div>
+        </Reveal>
       </SectionWrapper>
 
-      {/* Social proof */}
+      {/* Library showcase — the work is the pitch (anchor, left-aligned, light) */}
+      <section className="theme-light bg-bg relative overflow-hidden py-28 md:py-[180px]">
+        {/* Signature beat: the ambient glow drifts as the section scrolls */}
+        <Parallax
+          distance={70}
+          className="pointer-events-none absolute inset-x-0 top-0 z-0 h-[760px]"
+        >
+          <div
+            className="mx-auto h-[620px] max-w-[1000px]"
+            style={{
+              background:
+                "radial-gradient(50% 50% at 50% 40%, var(--blue-glow), transparent 65%)",
+            }}
+          />
+        </Parallax>
+
+        <div className="relative z-10 mx-auto max-w-[1200px] px-6 md:px-8">
+          {/* Left-aligned split header with the browse CTA on the right */}
+          <div className="mb-[52px] flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
+            <div className="w-full lg:max-w-[72%]">
+              <Reveal>
+                <Eyebrow>{homeLibrary.eyebrow}</Eyebrow>
+              </Reveal>
+              <RevealText
+                as="h2"
+                className="mt-4 max-w-[16ch] text-balance font-display text-h2 text-primary"
+                segments={[
+                  { text: homeLibrary.headline.lead },
+                  { text: homeLibrary.headline.highlight, gradient: true },
+                ]}
+              />
+              <Reveal delay={0.1}>
+                <p className="mt-3.5 max-w-[560px] text-base text-secondary md:text-lg">
+                  {homeLibrary.description}
+                </p>
+              </Reveal>
+            </div>
+            <Reveal>
+              <Button variant="ghost" arrow href={homeLibrary.cta.href}>
+                {homeLibrary.cta.label}
+              </Button>
+            </Reveal>
+          </div>
+
+          {/* Featured bento: the flagship reel leads, supported by the rest */}
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {featured.map((video, i) => (
+              <Reveal
+                key={video.id}
+                delay={(i % 3) * 0.08}
+                className={`h-full ${i === 0 ? "sm:col-span-2 lg:col-span-2" : ""}`}
+              >
+                <VideoCard video={video} />
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Proof: by the numbers */}
+      <StatBand stats={homeStats} eyebrow="By the numbers" />
+
+      {/* Why us (bento) — left header with a CTA on the right */}
       <SectionWrapper
-        align="center"
-        eyebrow={homeTestimonials.eyebrow}
-        heading={homeTestimonials.heading}
-        className="!py-20 md:!py-24"
+        align="left"
+        eyebrow={homeWhy.eyebrow}
+        heading={homeWhy.heading}
+        headingHighlight={homeWhy.headingHighlight}
+        description={homeWhy.description}
+        cta={{ label: "Browse videos", href: "/premade-videos" }}
+        className="theme-light bg-bg py-24 md:py-36"
       >
         <Stagger
-          className="grid grid-cols-1 gap-4 sm:grid-cols-2"
+          className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3"
           itemClassName="h-full"
         >
-          {homeTestimonials.items.map((t, i) => (
-            <Testimonial key={i} {...t} />
+          {homeWhy.items.map((f, i) => (
+            <WhyCard
+              key={f.title}
+              icon={f.icon}
+              title={f.title}
+              body={f.body}
+              accent={WHY_ACCENTS[i % WHY_ACCENTS.length]}
+            />
           ))}
         </Stagger>
       </SectionWrapper>
 
-      {/* FAQ (asymmetric) */}
-      <section className="py-24 md:py-32">
-        <div className="mx-auto grid max-w-[1200px] gap-10 px-6 md:px-8 lg:grid-cols-[0.8fr_1.2fr]">
-          <div>
-            <Reveal>
-              <Eyebrow>{homeFaqs.eyebrow}</Eyebrow>
-            </Reveal>
-            <RevealText
-              as="h2"
-              className="mt-4 max-w-[12ch] font-display text-h2"
-              segments={[{ text: homeFaqs.heading }]}
-            />
-          </div>
-          <Stagger className="flex flex-col gap-2.5">
-            {homeFaqs.items.map((f) => (
-              <FaqItem key={f.question} {...f} />
-            ))}
-          </Stagger>
-        </div>
-      </section>
+      {/* Proof: testimonials (global) */}
+      <TestimonialsSection />
 
-      {/* Final CTA */}
+      {/* FAQ */}
+      <FaqSection
+        eyebrow={homeFaqs.eyebrow}
+        heading={homeFaqs.heading}
+        headingHighlight={homeFaqs.headingHighlight}
+        items={homeFaqs.items}
+        className="theme-light bg-bg"
+      />
+
+      {/* Offer */}
       <CtaBand {...homeFinalCta} />
     </>
   );

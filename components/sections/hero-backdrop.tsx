@@ -1,6 +1,3 @@
-"use client";
-
-import * as React from "react";
 import { cn } from "@/lib/utils";
 
 const EDGE_MASK =
@@ -9,41 +6,37 @@ const EDGE_MASK =
 const GRID_LINES =
   "linear-gradient(to right, var(--grid-line) 1px, transparent 1px), linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px)";
 
-const GRID_MASK =
-  "linear-gradient(to right, #000 1px, transparent 1px), linear-gradient(to bottom, #000 1px, transparent 1px)";
-
-// Grid-aligned (multiples of 64px) so the beams ride the vertical grid lines.
-const BEAMS = [
+// Vertical lights (grid-aligned x = multiples of 64).
+const VBEAMS = [
   { left: 192, duration: 5, delay: 0 },
   { left: 512, duration: 6.5, delay: 1.6 },
   { left: 768, duration: 5.6, delay: 0.8 },
   { left: 1088, duration: 7, delay: 2.4 },
 ];
 
+// Horizontal lights (grid-aligned y = multiples of 64), some reversed (R to L).
+const HBEAMS = [
+  { top: 128, duration: 6, delay: 0.5, reverse: false },
+  { top: 256, duration: 7.5, delay: 2, reverse: true },
+  { top: 448, duration: 6.8, delay: 1.1, reverse: false },
+];
+
+// Star sparks at intersections where the beams cross.
+const SPARKS = [
+  { left: 192, top: 128, duration: 3.4, delay: 1.2 },
+  { left: 512, top: 256, duration: 4.2, delay: 2.6 },
+  { left: 768, top: 448, duration: 3.8, delay: 0.9 },
+  { left: 1088, top: 128, duration: 4.6, delay: 3.4 },
+];
+
 /**
- * Shared hero background: a top gradient wash (so the hero is not too dark), a
- * faint grid, glow lights running down the grid lines, and a cursor-interactive
- * glow that lights the lines near the pointer. Interactivity attaches to the
- * parent section so the host hero can stay a Server Component.
+ * Shared hero background: a top gradient wash, a faint grid, and glow lights
+ * running along the grid lines (vertical + horizontal) that spark where they
+ * cross. Pure CSS, decorative, reduced-motion safe (beams hidden when reduced).
  */
 export function HeroBackdrop({ className }: { className?: string }) {
-  const ref = React.useRef<HTMLDivElement>(null);
-
-  React.useEffect(() => {
-    const el = ref.current?.parentElement;
-    if (!el) return;
-    const onMove = (e: MouseEvent) => {
-      const r = el.getBoundingClientRect();
-      el.style.setProperty("--hx", `${e.clientX - r.left}px`);
-      el.style.setProperty("--hy", `${e.clientY - r.top}px`);
-    };
-    el.addEventListener("mousemove", onMove);
-    return () => el.removeEventListener("mousemove", onMove);
-  }, []);
-
   return (
     <div
-      ref={ref}
       aria-hidden
       className={cn("pointer-events-none absolute inset-0 overflow-hidden", className)}
     >
@@ -67,14 +60,14 @@ export function HeroBackdrop({ className }: { className?: string }) {
         }}
       />
 
-      {/* Running glow lights along grid lines */}
+      {/* Running glow lights + sparks */}
       <div
         className="absolute inset-0 hidden md:block"
         style={{ maskImage: EDGE_MASK, WebkitMaskImage: EDGE_MASK }}
       >
-        {BEAMS.map((b, i) => (
+        {VBEAMS.map((b, i) => (
           <span
-            key={i}
+            key={`v${i}`}
             className="grid-beam motion-reduce:hidden"
             style={{
               left: `${b.left}px`,
@@ -83,29 +76,31 @@ export function HeroBackdrop({ className }: { className?: string }) {
             }}
           />
         ))}
+        {HBEAMS.map((b, i) => (
+          <span
+            key={`h${i}`}
+            className="grid-beam-h motion-reduce:hidden"
+            style={{
+              top: `${b.top}px`,
+              animationDuration: `${b.duration}s`,
+              animationDelay: `${b.delay}s`,
+              animationDirection: b.reverse ? "reverse" : "normal",
+            }}
+          />
+        ))}
+        {SPARKS.map((s, i) => (
+          <span
+            key={`s${i}`}
+            className="grid-spark motion-reduce:hidden"
+            style={{
+              left: `${s.left}px`,
+              top: `${s.top}px`,
+              animationDuration: `${s.duration}s`,
+              animationDelay: `${s.delay}s`,
+            }}
+          />
+        ))}
       </div>
-
-      {/* Cursor-lit grid lines */}
-      <div
-        className="absolute inset-0"
-        style={{
-          backgroundImage:
-            "radial-gradient(320px circle at var(--hx, 50%) var(--hy, 28%), var(--blue), transparent 65%)",
-          maskImage: GRID_MASK,
-          WebkitMaskImage: GRID_MASK,
-          maskSize: "64px 64px",
-          WebkitMaskSize: "64px 64px",
-        }}
-      />
-
-      {/* Soft ambient pool following the cursor */}
-      <div
-        className="absolute inset-0 opacity-60"
-        style={{
-          background:
-            "radial-gradient(360px circle at var(--hx, 50%) var(--hy, 28%), var(--blue-soft), transparent 70%)",
-        }}
-      />
     </div>
   );
 }

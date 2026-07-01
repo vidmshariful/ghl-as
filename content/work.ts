@@ -17,7 +17,7 @@ export const workHero = {
 
 export const workShowcase = {
   eyebrow: "Showcase",
-  heading: "Videos we have made",
+  heading: "Videos we have **made**",
   description: "Filter by type to see the range.",
 };
 
@@ -35,5 +35,20 @@ export const workFinalCta = {
   ctas: [
     { ...ctas.browse, variant: "blue" as const },
     { ...ctas.book, variant: "ghost" as const },
+  ],
+  checks: ["Real results", "Fully white-label", "Ready in days"],
+  steps: [
+    {
+      title: "Browse the work",
+      body: "See real branded videos in action.",
+    },
+    {
+      title: "Pick your style",
+      body: "Find what fits your platform and brand.",
+    },
+    {
+      title: "Make it yours",
+      body: "Branded to you and delivered in days.",
+    },
   ],
 };

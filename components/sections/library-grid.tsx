@@ -30,7 +30,11 @@ export function LibraryGrid({
 }) {
   const reduce = useReducedMotion();
   const [active, setActive] = React.useState<Filter>("All");
-  const tabs: Filter[] = ["All", ...VIDEO_CATEGORIES];
+  // Only show tabs for categories that actually have videos in this set.
+  const present = VIDEO_CATEGORIES.filter((c) =>
+    videos.some((v) => v.category === c),
+  );
+  const tabs: Filter[] = ["All", ...present];
   // Unique per instance so multiple grids on one page do not share the indicator.
   const indicatorId = React.useId();
 
@@ -74,7 +78,7 @@ export function LibraryGrid({
       {/* Card grid */}
       <motion.div
         layout={!reduce}
-        className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3"
+        className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3"
       >
         <AnimatePresence mode="popLayout">
           {filtered.map((video, i) => (

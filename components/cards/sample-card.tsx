@@ -26,7 +26,7 @@ export function SampleCard({
         className="relative aspect-video border-b border-line"
         style={{ background: "linear-gradient(140deg, #16203a, #0e1626)" }}
       >
-        <span className="absolute left-2.5 top-2.5 rounded-md bg-gold px-2.5 py-1 font-mono text-[9px] font-bold uppercase tracking-[0.5px] text-ink">
+        <span className="absolute left-2.5 top-2.5 rounded-lg bg-blue px-2.5 py-1 font-mono text-[9px] font-bold uppercase tracking-[0.5px] text-white">
           {tag}
         </span>
         <span className="absolute left-1/2 top-1/2 flex h-[46px] w-[46px] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-blue/90 text-white shadow-lg transition-transform duration-200 group-hover:scale-110">

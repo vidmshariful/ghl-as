@@ -1,13 +1,13 @@
 import { Button } from "@/components/ui/button";
-import type { Tier } from "@/content/pricing";
+import type { Tier } from "@/content/editing-plans";
 import { cn } from "@/lib/utils";
 
 /**
  * Pricing tier. Bordered price box with the original price struck through (muted
  * gray, never red) next to the current price (gradient) and period, an Includes
- * list with gold ring bullets, and a CTA anchored at the bottom.
+ * list with blue ring bullets, and a CTA anchored at the bottom.
  *
- * Popular tier: an animated rotating blue→gold gradient border (.tier-glow), a
+ * Popular tier: an animated rotating blue-to-gold gradient border (.tier-glow), a
  * warm gold corner glow, and a floating "Most popular" badge that is absolutely
  * positioned so every card keeps the same height and content alignment.
  */
@@ -29,7 +29,7 @@ export function TierCard({ tier, className }: { tier: Tier; className?: string }
           className="pointer-events-none absolute -right-12 -top-12 z-[1] h-48 w-48 rounded-full"
           style={{
             background:
-              "radial-gradient(circle, rgba(245,184,31,0.28), transparent 70%)",
+              "radial-gradient(circle, var(--gold-soft), transparent 70%)",
             filter: "blur(18px)",
           }}
         />
@@ -37,7 +37,7 @@ export function TierCard({ tier, className }: { tier: Tier; className?: string }
 
       {/* Floating badge (absolute so it never changes card height) */}
       {tier.popular && (
-        <span className="absolute right-4 top-4 z-20 rounded-md bg-gold px-2.5 py-1 text-[10.5px] font-bold uppercase tracking-[0.5px] text-ink shadow-[0_4px_12px_rgba(0,0,0,0.25)]">
+        <span className="absolute right-4 top-4 z-20 rounded-lg bg-gold px-2.5 py-1 text-[10.5px] font-bold uppercase tracking-[0.5px] text-ink shadow-[0_4px_12px_rgba(0,0,0,0.25)]">
           Most popular
         </span>
       )}
@@ -77,8 +77,8 @@ export function TierCard({ tier, className }: { tier: Tier; className?: string }
               key={item}
               className="flex items-center gap-3 text-[13.5px] text-secondary"
             >
-              <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 border-gold">
-                <span className="h-[7px] w-[7px] rounded-full bg-gold" />
+              <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 border-blue">
+                <span className="h-[7px] w-[7px] rounded-full bg-blue" />
               </span>
               {item}
             </li>
