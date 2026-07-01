@@ -21,14 +21,17 @@ const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
 export function VideoCard({
   video,
   showcase = false,
+  defaultOpen = false,
 }: {
   video: Video;
   /** Showcase mode (Our Work): thumb + title only, no price / included / buy. */
   showcase?: boolean;
+  /** Start with the "What's included" list expanded. */
+  defaultOpen?: boolean;
 }) {
   const reduce = useReducedMotion();
   const [open, setOpen] = React.useState(false);
-  const [expanded, setExpanded] = React.useState(false);
+  const [expanded, setExpanded] = React.useState(defaultOpen);
   const rootRef = React.useRef<HTMLElement>(null);
 
   const orderHref = video.orderUrl ?? siteConfig.orderUrl;
@@ -46,12 +49,12 @@ export function VideoCard({
     <article
       ref={rootRef}
       onMouseMove={reduce ? undefined : onMove}
-      className="card-surface group relative flex h-full flex-col overflow-hidden rounded-2xl border border-line transition-all duration-200 hover:-translate-y-[5px] hover:border-blue hover:shadow-[0_14px_40px_rgba(0,0,0,0.45),0_0_30px_var(--blue-glow)]"
+      className="card-surface group relative flex h-full flex-col overflow-hidden rounded-2xl border border-line transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] hover:-translate-y-[6px] hover:border-blue hover:shadow-[0_14px_40px_rgba(0,0,0,0.45),0_0_30px_var(--blue-glow)]"
     >
       {/* Cursor glow */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 z-30 opacity-0 transition-opacity duration-200 group-hover:opacity-100"
+        className="pointer-events-none absolute inset-0 z-30 opacity-0 transition-opacity duration-500 ease-out group-hover:opacity-100"
         style={{
           background:
             "radial-gradient(220px circle at var(--mx, 50%) var(--my, 50%), var(--blue-soft), transparent 65%)",
@@ -110,13 +113,13 @@ export function VideoCard({
               />
             )}
 
-            <span className="absolute left-1/2 top-1/2 z-10 flex h-[46px] w-[46px] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-blue/90 text-white shadow-lg transition-transform duration-200 group-hover:scale-110">
+            <span className="absolute left-1/2 top-1/2 z-10 flex h-[46px] w-[46px] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-blue/90 text-white shadow-lg transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:scale-110">
               <Play className="h-[18px] w-[18px] translate-x-px fill-current" />
             </span>
           </button>
         )}
 
-        <span className="absolute left-2.5 top-2.5 z-20 rounded-lg bg-blue px-2.5 py-1 font-mono text-[9px] font-bold uppercase tracking-[0.5px] text-white">
+        <span className="absolute left-2.5 top-2.5 z-20 rounded-lg bg-gold px-2.5 py-1 font-mono text-[9px] font-bold uppercase tracking-[0.5px] text-ink">
           {video.category}
         </span>
       </div>

@@ -155,7 +155,10 @@ export default function HomePage() {
                 delay={(i % 3) * 0.08}
                 className={`h-full ${i === 0 ? "sm:col-span-2 lg:col-span-2" : ""}`}
               >
-                <VideoCard video={video} />
+                <VideoCard
+                  video={video}
+                  defaultOpen={video.id === "answering-service-247"}
+                />
               </Reveal>
             ))}
           </div>

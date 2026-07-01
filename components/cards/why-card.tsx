@@ -41,11 +41,11 @@ interface WhyCardProps {
 export function WhyCard({ icon: Icon, title, body, accent = "blue" }: WhyCardProps) {
   const a = ACCENTS[accent];
   return (
-    <div className="card-surface group relative flex h-full min-h-[260px] flex-col items-center justify-center rounded-2xl border border-line px-6 py-10 text-center transition-all duration-300 hover:-translate-y-1">
+    <div className="card-surface group relative flex h-full min-h-[260px] flex-col items-center justify-center rounded-2xl border border-line px-6 py-10 text-center transition-all duration-[600ms] ease-[cubic-bezier(0.4,0,0.2,1)] hover:-translate-y-1.5">
       {/* Hover halo */}
       <span
         aria-hidden
-        className="pointer-events-none absolute -inset-2 -z-10 rounded-[30px] opacity-0 blur-xl transition-opacity duration-300 group-hover:opacity-100"
+        className="pointer-events-none absolute -inset-2 -z-10 rounded-[30px] opacity-0 blur-xl transition-opacity duration-[600ms] group-hover:opacity-100"
         style={{
           background: `radial-gradient(60% 55% at 50% 35%, ${a.glow}, transparent 70%)`,
         }}
@@ -60,7 +60,7 @@ export function WhyCard({ icon: Icon, title, body, accent = "blue" }: WhyCardPro
       />
 
       <span
-        className="relative flex h-16 w-16 items-center justify-center rounded-2xl text-white transition-transform duration-300 ease-out group-hover:-rotate-6 group-hover:scale-105"
+        className="relative flex h-16 w-16 items-center justify-center rounded-2xl text-white transition-transform duration-[600ms] ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:rotate-3 group-hover:scale-110"
         style={{
           background: a.grad,
           boxShadow: `0 14px 28px ${a.glow}, inset 0 1.5px 0 rgba(255,255,255,0.5), inset 0 -4px 10px rgba(0,0,0,0.18)`,

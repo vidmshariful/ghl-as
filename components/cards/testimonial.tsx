@@ -31,7 +31,7 @@ export function Testimonial({
   return (
     <figure
       className={cn(
-        "card-surface flex h-full flex-col rounded-2xl border border-line p-6",
+        "card-surface flex h-full flex-col rounded-2xl border border-line p-6 transition-all duration-[600ms] ease-[cubic-bezier(0.4,0,0.2,1)] hover:-translate-y-1 hover:border-line-strong",
         className,
       )}
     >

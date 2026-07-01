@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { createPortal } from "react-dom";
 import Link from "next/link";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { X, ArrowUpRight, LibraryBig, PhoneCall, Scissors } from "lucide-react";
@@ -61,7 +62,12 @@ interface VideoModalProps {
   actions?: ModalAction[];
 }
 
-/** Lightbox video player. Autoplays (user-initiated) with sound + controls. */
+/**
+ * Lightbox video player. Autoplays (user-initiated) with sound + controls.
+ * Portaled to <body> so it is always viewport-fixed and never affected by an
+ * ancestor's transform (e.g. a hovered/animated card). Closes on backdrop
+ * click or Escape.
+ */
 export function VideoModal({
   open,
   onClose,
@@ -107,7 +113,7 @@ function VideoModalPanel({
     };
   }, [onClose]);
 
-  return (
+  return createPortal(
     <motion.div
       className="fixed inset-0 z-[80] flex items-center justify-center px-4 py-10"
       role="dialog"
@@ -223,6 +229,7 @@ function VideoModalPanel({
           </div>
         )}
       </motion.div>
-    </motion.div>
+    </motion.div>,
+    document.body,
   );
 }

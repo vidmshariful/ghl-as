@@ -29,11 +29,11 @@ export function PriceCard({
 }: PriceTier & { cta: { label: string; href: string } }) {
   const a = ACCENTS[accent];
   return (
-    <div className="card-surface group relative flex h-full flex-col rounded-2xl border border-line p-7 transition-all duration-300 hover:-translate-y-1">
+    <div className="card-surface group relative flex h-full flex-col rounded-2xl border border-line p-7 transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] hover:-translate-y-2">
       {/* hover halo */}
       <span
         aria-hidden
-        className="pointer-events-none absolute -inset-2 -z-10 rounded-[28px] opacity-0 blur-xl transition-opacity duration-300 group-hover:opacity-100"
+        className="pointer-events-none absolute -inset-2 -z-10 rounded-[28px] opacity-0 blur-xl transition-opacity duration-500 group-hover:opacity-100"
         style={{
           background: `radial-gradient(60% 55% at 50% 35%, ${a.glow}, transparent 70%)`,
         }}

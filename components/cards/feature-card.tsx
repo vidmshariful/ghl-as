@@ -60,7 +60,7 @@ export function FeatureCard({
   const a = ACCENTS[accent];
 
   const classes = cn(
-    "card-surface group relative flex h-full min-h-[270px] flex-col rounded-2xl border border-line p-7 transition-all duration-300 hover:-translate-y-1",
+    "card-surface group relative flex h-full min-h-[270px] flex-col rounded-2xl border border-line p-7 transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] hover:-translate-y-2",
     className,
   );
 
@@ -69,7 +69,7 @@ export function FeatureCard({
       {/* Hover halo (sits just outside the card edges) */}
       <span
         aria-hidden
-        className="pointer-events-none absolute -inset-2 -z-10 rounded-[30px] opacity-0 blur-xl transition-opacity duration-300 group-hover:opacity-100"
+        className="pointer-events-none absolute -inset-2 -z-10 rounded-[30px] opacity-0 blur-xl transition-opacity duration-500 group-hover:opacity-100"
         style={{
           background: `radial-gradient(60% 55% at 50% 35%, ${a.glow}, transparent 70%)`,
         }}
@@ -85,7 +85,7 @@ export function FeatureCard({
 
       {Icon && (
         <span
-          className="relative flex h-14 w-14 items-center justify-center rounded-2xl text-white transition-transform duration-300 ease-out group-hover:-rotate-6 group-hover:scale-105"
+          className="relative flex h-14 w-14 items-center justify-center rounded-2xl text-white transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:-rotate-6 group-hover:scale-110"
           style={{
             background: a.grad,
             boxShadow: `0 12px 24px ${a.glow}, inset 0 1.5px 0 rgba(255,255,255,0.5), inset 0 -4px 10px rgba(0,0,0,0.18)`,

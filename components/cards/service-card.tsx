@@ -44,7 +44,7 @@ export function ServiceCard({
   return (
     <Link
       href={href}
-      className="tier-glow-hover group relative flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-surface-2 transition-all duration-200 hover:-translate-y-[4px]"
+      className="tier-glow-hover group relative flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-surface-2 transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] hover:-translate-y-[6px]"
     >
       {/* Accent tint */}
       <div
